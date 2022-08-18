@@ -54,16 +54,15 @@ func (c *shippingServiceClient) GetConsignments(ctx context.Context, in *GetRequ
 }
 
 // ShippingServiceServer is the server API for ShippingService service.
-// All implementations must embed UnimplementedShippingServiceServer
+// All implementations should embed UnimplementedShippingServiceServer
 // for forward compatibility
 type ShippingServiceServer interface {
 	CreateConsignment(context.Context, *Consignment) (*Response, error)
 	// Created a new method
 	GetConsignments(context.Context, *GetRequest) (*Response, error)
-	mustEmbedUnimplementedShippingServiceServer()
 }
 
-// UnimplementedShippingServiceServer must be embedded to have forward compatible implementations.
+// UnimplementedShippingServiceServer should be embedded to have forward compatible implementations.
 type UnimplementedShippingServiceServer struct {
 }
 
@@ -73,7 +72,6 @@ func (UnimplementedShippingServiceServer) CreateConsignment(context.Context, *Co
 func (UnimplementedShippingServiceServer) GetConsignments(context.Context, *GetRequest) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetConsignments not implemented")
 }
-func (UnimplementedShippingServiceServer) mustEmbedUnimplementedShippingServiceServer() {}
 
 // UnsafeShippingServiceServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to ShippingServiceServer will
@@ -140,4 +138,50 @@ var ShippingService_ServiceDesc = grpc.ServiceDesc{
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "proto/consignment/consignment.proto",
+}
+
+// UnimplementedShippingServiceClient is the client API for UnimplementedShippingService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type UnimplementedShippingServiceClient interface {
+}
+
+type unimplementedShippingServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewUnimplementedShippingServiceClient(cc grpc.ClientConnInterface) UnimplementedShippingServiceClient {
+	return &unimplementedShippingServiceClient{cc}
+}
+
+// UnimplementedShippingServiceServer is the server API for UnimplementedShippingService service.
+// All implementations should embed UnimplementedUnimplementedShippingServiceServer
+// for forward compatibility
+type UnimplementedShippingServiceServer interface {
+}
+
+// UnimplementedUnimplementedShippingServiceServer should be embedded to have forward compatible implementations.
+type UnimplementedUnimplementedShippingServiceServer struct {
+}
+
+// UnsafeUnimplementedShippingServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to UnimplementedShippingServiceServer will
+// result in compilation errors.
+type UnsafeUnimplementedShippingServiceServer interface {
+	mustEmbedUnimplementedUnimplementedShippingServiceServer()
+}
+
+func RegisterUnimplementedShippingServiceServer(s grpc.ServiceRegistrar, srv UnimplementedShippingServiceServer) {
+	s.RegisterService(&UnimplementedShippingService_ServiceDesc, srv)
+}
+
+// UnimplementedShippingService_ServiceDesc is the grpc.ServiceDesc for UnimplementedShippingService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var UnimplementedShippingService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "consignment.UnimplementedShippingService",
+	HandlerType: (*UnimplementedShippingServiceServer)(nil),
+	Methods:     []grpc.MethodDesc{},
+	Streams:     []grpc.StreamDesc{},
+	Metadata:    "proto/consignment/consignment.proto",
 }
